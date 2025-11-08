@@ -13,7 +13,7 @@ tkwindow = Tk()
 # title of window
 tkwindow.title("Math Quiz!")
 # icon of window changed, false means it wont show in other widgets
-tkwindow.iconphoto(False, PhotoImage(file="Assessment 1 - Skills Portfolio/Exercises/EX1ICON.png"))
+tkwindow.iconphoto(False, PhotoImage(file="Assessment 1 - Skills Portfolio/Exercise 1/EX1ICON.png"))
 # size of screen
 tkwindow.geometry("500x500")
 
@@ -242,7 +242,7 @@ lvl3_frame.place(x=0, y=0, relwidth=1, relheight=1)
 
 
 # tkinter photoimage feature stored in variable 'background'
-background = PhotoImage(file="Assessment 1 - Skills Portfolio/Exercises/EX1BACKGROUND.png")
+background = PhotoImage(file="Assessment 1 - Skills Portfolio/Exercise 1/EX1BACKGROUND.png")
 # use a label to display image and chose the intro frame
 bg_label = Label(intro_frame, image=background)
 # placing of image (it take's up the whole window)
