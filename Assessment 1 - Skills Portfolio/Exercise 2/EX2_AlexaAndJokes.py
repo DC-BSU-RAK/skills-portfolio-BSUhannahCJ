@@ -22,31 +22,6 @@ pygame.mixer.init()
 
 
 
-# variable with the random jokes txt file
-joketxt= "Assessment 1 - Skills Portfolio/Exercise 2/randomJokes.txt"
-
-# function for pulling text(jokes) from txt file
-def jokes():
-    # calls the global variable into the function
-    global joketxt
-    # reads each line in the txt file and then stores then in a list and then returns the list of jokes
-    with open(joketxt, "r") as filehandling:
-        jokelines = [line for line in filehandling]
-    return jokelines
-
-
-# defined fucntion to display joke
-def display():
-    # varaible uses random by python to choose (choice) a random joke line from the text file which then this variable is used in the jokelbl.configure
-    inputjoke = random.choice(jokes())
-    # configures the text in the jokelbl when the function is called (when the 'yes' button and or 'next joke' button is pressed)
-    jokelbl.configure(text=inputjoke)
-
-
-# switching frames function
-def nextframe(frames):
-    # brings a specific frame to the front 
-    frames.tkraise()    
 
 # funtion to play an audio to laugh
 def laugh():
@@ -61,6 +36,39 @@ def boo():
     pygame.mixer.music.load("Assessment 1 - Skills Portfolio/Exercise 2/boo.mp3")
      # plays it (when the button is pressed)
     pygame.mixer.music.play()
+
+
+# variable with the random jokes txt file
+joketxt= "Assessment 1 - Skills Portfolio/Exercise 2/randomJokes.txt"
+# lists are mutuable so i can use that feature to display different parts off the joke
+current_joke = [("", "")] 
+# function for pulling text(jokes) from txt file
+def jokes():
+    # calls the global variable into the function
+    global joketxt
+    # reads each line in the txt file and then stores then in a list and then returns the list of jokes
+    with open(joketxt, "r") as filehandling:
+        # will display the first part of the line with a question mark in it, the part after that is skipped
+        jokelines = [line.split("?") for line in filehandling if "?" in line]
+    return jokelines
+
+
+# switching frames function
+def nextframe(frames):
+    # brings a specific frame to the front 
+    frames.tkraise()    
+
+
+# defined fucntion to display joke
+def display():
+    # selects a random joke
+    current_joke[0] = random.choice(jokes())
+    # configures the text in the jokelbl when the function is called (when the 'yes' button and or 'next joke' button is pressed)
+    jokelbl.config(text=current_joke[0][0])
+
+# a function that updates the list so the second part of the joke is shown
+def jokepunchline():
+    jokelbl.config(text=current_joke[0][1])   
 
 
 
@@ -124,16 +132,18 @@ jokelbl.pack(pady=1)
 
 
 #my  buttons for joke page
+# a button that calls the show punch;=line function and shows the punchline
+Button(jokepage, text="What's the punchline?",width=25, height=2, font=("Comic Sans MS", 10),bg="orange",  command=jokepunchline).pack(pady=10)
+# calls display function and tells you another joke
+Button(jokepage, text="Alexa, tell me another joke",width=25, height=2, font=("Comic Sans MS", 10),bg="orange",  command=display).pack(pady=10)
 # plays laughing sound effect
 Button(jokepage, text="HAHA!",width=25, height=2,font=("Comic Sans MS", 10),bg="orange",  command=laugh).pack(pady=5)
 # plays booing sound effect
 Button(jokepage, text="BOO!",width=25, height=2,font=("Comic Sans MS", 10),bg="orange",  command=boo).pack(pady=5)
-# calls display function and tells you another joke
-Button(jokepage, text="Alexa, tell me another joke",width=25, height=2, font=("Comic Sans MS", 10),bg="orange",  command=display).pack(pady=10)
 # takes you back to menu with next frame function
-Button(jokepage, text="Menu", width=25, height=2, font=("Comic Sans MS", 10), bg="orange", command=lambda: nextframe(themenu)).pack(pady=10)
+Button(jokepage, text="Menu", width=25, height=2, font=("Comic Sans MS", 10),bg="gold", command=lambda: nextframe(themenu)).pack(pady=10)
 # quits the program
-Button(jokepage, text="leave", width=25, height=2, font=("Comic Sans MS", 10), bg="orange", command=tkwindow.quit).pack(pady=10)
+Button(jokepage, text="leave", width=25, height=2, font=("Comic Sans MS", 10),bg="gold", command=tkwindow.quit).pack(pady=10)
 
 
 
